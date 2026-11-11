@@ -54,7 +54,6 @@ let
   patches = [
     ../patches/no-download.patch
     ../patches/disable-sbom-generation.patch
-    ../patches/bump-jackson-core-in-source.patch
   ];
 
   bazelDeps = callPackage ./bazel-deps.nix { } {
@@ -64,7 +63,6 @@ let
       ideaHash
       androidHash
       bazelConfig
-      patches
       ;
     commandArgs = bazelArgs;
   };

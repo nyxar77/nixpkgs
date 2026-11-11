@@ -1,9 +1,7 @@
 --- a/platform/build-scripts/src/org/jetbrains/intellij/build/impl/sbom/SoftwareBillOfMaterialsImpl.kt
 +++ b/platform/build-scripts/src/org/jetbrains/intellij/build/impl/sbom/SoftwareBillOfMaterialsImpl.kt
-@@ -162,6 +162,8 @@
-   }
- 
-   override suspend fun generate() {
+@@ -204,6 +204,8 @@
+   override fun generate() {
 +    Span.current().addEvent("SBOM generation are unavaliable due to requiring internet, skipping")
 +    return
      val skipReason = when {
