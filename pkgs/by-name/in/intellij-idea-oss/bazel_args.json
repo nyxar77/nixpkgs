@@ -1,0 +1,23 @@
+{
+  "base": {
+    "version": "9.1.0",
+    "hash": "sha256-RbRM9HxcBij5gbd0aeArslc/IyjvycM5v7zOnaDT3cU="
+  },
+  "jbPatches": {
+    "version": "jb_20260505_126",
+    "hash": "sha256-hsYU4Y7GLv0AVfkR+MTWslzfpdMI98v3Vq0Co1Nf9Ho=",
+    "names": [
+      "0001-DRAFT-fallback-to-USERPROFILE-environment-variable-w.patch",
+      "0002-DRAFT-use-recursive-file-watcher-on-Windows-in-Watch.patch",
+      "0003-DRAFT-check-junctions-by-is-other-in-WindowsFileSyst.patch",
+      "0004-DRAFT-add-WindowsFileSystem-readdir-to-traverse-entr.patch",
+      "0005-DRAFT-pass-remote-cache-headers-to-HttpCacheClient-i.patch",
+      "0006-DRAFT-switch-to-jbrsdk-v25.0.2b432.48.patch"
+    ]
+  },
+  "registry": {
+    "rev": "203d7d84fbf5fb6991e13a85ab20d7ee674c2352",
+    "hash": "sha256-FDLvwNchGy5uQqzpW9re9pZ1D3ybfMwZd1EPK6AyDO0="
+  },
+  "repoCacheHash": "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+}

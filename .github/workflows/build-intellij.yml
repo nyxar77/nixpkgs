@@ -1,0 +1,39 @@
+name: Build IntelliJ IDEA OSS
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - intellij-idea-oss
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Maximize build space
+        uses: easimon/maximize-build-space@master
+        with:
+          root-reserve-mb: 5120
+          swap-size-mb: 8192
+          remove-dotnet: 'true'
+          remove-android: 'true'
+          remove-haskell: 'true'
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v27
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+            max-jobs = 2
+            cores = 2
+
+      - name: Compute Bazel Deps FOD Hash
+        run: |
+          nix-build -A intellij-idea-oss.src.bazelDeps || true
+
+      - name: Build IntelliJ IDEA OSS
+        run: |
+          nix-build -A intellij-idea-oss

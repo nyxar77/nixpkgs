@@ -11,7 +11,7 @@ let
   src = jetbrains.mkJetBrainsSource (
     lib.importJSON ./source_args.json
     // {
-      mvnDeps = ./maven_artefacts.json;
+      bazelConfig = lib.importJSON ./bazel_args.json;
     }
   );
 in

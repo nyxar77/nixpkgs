@@ -28,7 +28,7 @@ class UpdaterConfig:
     old_version: str | None
     no_bin: bool
     no_src: bool
-    no_maven_deps: bool
+    no_bazel_deps: bool
     dry_run: bool
 
     def __init__(self, argparse_result):
@@ -52,5 +52,5 @@ class UpdaterConfig:
         )
         self.no_bin = argparse_result.no_bin
         self.no_src = argparse_result.no_src
-        self.no_maven_deps = argparse_result.no_maven_deps
+        self.no_bazel_deps = argparse_result.no_bazel_deps
         self.dry_run = argparse_result.dry_run

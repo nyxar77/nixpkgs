@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -i python3 -p python3 python3.pkgs.packaging python3.pkgs.xmltodict python3.pkgs.requests nurl
+#!nix-shell -i python3 -p python3 python3.pkgs.packaging python3.pkgs.xmltodict python3.pkgs.requests git nurl
 import argparse
 import json
 import sys
@@ -29,9 +29,11 @@ def main():
         "--no-src", action="store_true", help="do not update source IDEs"
     )
     parser.add_argument(
+        "--no-bazel-deps",
         "--no-maven-deps",
+        dest="no_bazel_deps",
         action="store_true",
-        help="do not update maven dependencies for source IDEs",
+        help="do not build and update the Bazel repository cache FOD hash for source IDEs",
     )
     parser.add_argument(
         "--dry-run", action="store_true", help="do not change any files"

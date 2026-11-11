@@ -68,10 +68,9 @@ fetchurl {
 To keep things simple, the update script generates files within the package directory:
 - `version.json`: version information for binary packages, and `urls` for the package source.
 - `source_args.json`: arguments to pass to `mkJetBrainsSource` in source packages.
-- `maven_artefacts.json`: maven artefacts used by source packages.
+- `bazel_args.json`: Bazel configuration and repository cache hash (`bazelConfig`) for source packages.
 
 Packages are responsible for importing these files, using `lib.importJSON`.
-Other than `maven_artefacts.json`, which is passed directly to `mkJetBrainsSource` as `mvnDeps`.
 
 ## How to add an IDE:
  - Add a new derivation in `/pkgs/by-name/...`
