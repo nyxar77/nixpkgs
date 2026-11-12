@@ -26,10 +26,12 @@ jobs:
             max-jobs = 2
             cores = 2
 
-      - name: Compute Bazel Deps FOD Hash
+      - name: Build Bazel Deps
         run: |
-          nix-build -A intellij-idea-oss.src.bazelDeps || true
+          nix-build -A intellij-idea-oss.src.bazelDeps
 
       - name: Build IntelliJ IDEA OSS
+        env:
+          NIXPKGS_ALLOW_INSECURE: 1
         run: |
           nix-build -A intellij-idea-oss
