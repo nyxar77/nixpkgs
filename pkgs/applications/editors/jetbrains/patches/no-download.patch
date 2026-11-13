@@ -112,3 +112,16 @@ diff -ruN a/platform/build-scripts/src/org/jetbrains/intellij/build/LinuxDistrib
  
    @Deprecated(message = "IJI-2568", replaceWith = ReplaceWith("snaps += Snap(name = value, description = TODO())"))
    var snapName: String? = null
+diff -ruN a/platform/build-scripts/src/org/jetbrains/intellij/build/NativeBinaryDownloader.kt b/platform/build-scripts/src/org/jetbrains/intellij/build/NativeBinaryDownloader.kt
+--- a/platform/build-scripts/src/org/jetbrains/intellij/build/NativeBinaryDownloader.kt	2026-11-11 22:30:46.260000000 +0000
++++ b/platform/build-scripts/src/org/jetbrains/intellij/build/NativeBinaryDownloader.kt	2026-11-11 22:30:46.330000000 +0000
+@@ -37,7 +37,8 @@
+       if (localLauncher != null) return localLauncher
+     }
+ 
+-    val (archiveFile, unpackedDir) = downloadAndUnpack(context, "launcherBuild", LAUNCHER_ID)
++    val unpackedDir = Path.of("XPLAT_LAUNCHER_PREBUILT_PATH_HERE")
++    val archiveFile = unpackedDir
+     val executableFile = findFile(archiveFile, unpackedDir, binName(os, arch, "xplat-launcher"))
+     val licenseFile = findFile(archiveFile, unpackedDir, "license/${LICENSE_FILE_NAME}")
+     val extraFile = when (os) {

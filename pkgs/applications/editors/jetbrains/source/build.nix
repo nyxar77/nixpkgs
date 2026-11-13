@@ -288,7 +288,7 @@ callPackage ../../../../by-name/ba/bazel_9/build-support/bazelDerivation.nix { }
       platform/build-scripts/src/org/jetbrains/intellij/build/impl/brokenPlugins.kt \
       --replace-fail 'BROKEN_PLUGINS_HERE' '${./brokenPlugins.json}'
     substituteInPlace \
-      platform/build-scripts/src/org/jetbrains/intellij/build/impl/LinuxDistributionBuilder.kt \
+      platform/build-scripts/src/org/jetbrains/intellij/build/NativeBinaryDownloader.kt \
       --replace-fail 'XPLAT_LAUNCHER_PREBUILT_PATH_HERE' '${xplat-launcher}'
 
     substituteInPlace \
