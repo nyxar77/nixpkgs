@@ -220,6 +220,7 @@ callPackage ../../../../by-name/ba/bazel_9/build-support/bazelDerivation.nix { }
   bazelRepoCache = bazelDeps;
   command = "build";
   targets = [ bazelTarget ];
+  startupArgs = [ "--noexperimental_remote_repo_contents_cache" ];
   commandArgs = bazelArgs ++ [ "--vendor_dir=vendor_dir" ];
 
   bazelPreBuild = ''
@@ -232,9 +233,12 @@ callPackage ../../../../by-name/ba/bazel_9/build-support/bazelDerivation.nix { }
     if [ -f platform/build-scripts/bazel/.bazelversion ]; then
       substituteInPlace platform/build-scripts/bazel/.bazelversion --replace-fail "JetBrains/" ""
     fi
+    if [ -f common.bazelrc ]; then
+      substituteInPlace common.bazelrc --replace-warn "startup --experimental_remote_repo_contents_cache" "# startup --experimental_remote_repo_contents_cache"
+    fi
 
     mkdir vendor_dir
-    ${bazel}/bin/bazel --batch vendor \
+    ${bazel}/bin/bazel --batch --noexperimental_remote_repo_contents_cache vendor \
       --vendor_dir=vendor_dir \
       --registry=file://${registry} \
       --repository_cache=repo_cache \
@@ -298,7 +302,7 @@ callPackage ../../../../by-name/ba/bazel_9/build-support/bazelDerivation.nix { }
   installPhase = ''
     runHook preInstall
 
-    ${bazel}/bin/bazel --batch run \
+    ${bazel}/bin/bazel --batch --noexperimental_remote_repo_contents_cache run \
       --registry=file://${registry} \
       --repository_cache=repo_cache \
       --repo_contents_cache= \
