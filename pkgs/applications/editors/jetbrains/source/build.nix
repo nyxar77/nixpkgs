@@ -221,7 +221,10 @@ callPackage ../../../../by-name/ba/bazel_9/build-support/bazelDerivation.nix { }
   command = "build";
   targets = [ bazelTarget ];
   startupArgs = [ "--noexperimental_remote_repo_contents_cache" ];
-  commandArgs = bazelArgs ++ [ "--vendor_dir=vendor_dir" ];
+  commandArgs = bazelArgs ++ [
+    "--vendor_dir=vendor_dir"
+    "--lockfile_mode=update"
+  ];
 
   bazelPreBuild = ''
     ## BAZEL PATCHES
@@ -240,6 +243,7 @@ callPackage ../../../../by-name/ba/bazel_9/build-support/bazelDerivation.nix { }
     mkdir vendor_dir
     ${bazel}/bin/bazel --batch --noexperimental_remote_repo_contents_cache vendor \
       --vendor_dir=vendor_dir \
+      --lockfile_mode=update \
       --registry=file://${registry} \
       --repository_cache=repo_cache \
       --repo_contents_cache= \
@@ -307,6 +311,7 @@ callPackage ../../../../by-name/ba/bazel_9/build-support/bazelDerivation.nix { }
       --repository_cache=repo_cache \
       --repo_contents_cache= \
       --vendor_dir=vendor_dir \
+      --lockfile_mode=update \
       ${lib.escapeShellArgs bazelArgs} \
       ${bazelTarget} \
       -- \
