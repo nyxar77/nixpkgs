@@ -169,7 +169,6 @@ let
     "toolchains_llvm++llvm+llvm_toolchain_llvm"
     "llvm+"
     "rules_python++python+python_3_11_x86_64-unknown-linux-gnu"
-    "rules_java++toolchains+remote_java_tools_linux"
     "+jbr_toolchains+remotejbr21_linux"
     "+jbr_toolchains+remotejbr25_linux"
     "rules_java++toolchains+remotejdk21_linux"
@@ -276,6 +275,28 @@ callPackage ../../../../by-name/ba/bazel_9/build-support/bazelDerivation.nix { }
     ${builtins.concatStringsSep "\n" (
       map (d: "if [ -d \"vendor_dir/${d}\" ]; then autoPatchelf \"vendor_dir/${d}\"; fi") autoPatchelfVendorDirs
     )}
+
+    # patchelf 0.19.2 corrupts PT_LOAD segments of non-PIE ET_EXEC binaries in remote_java_tools_linux (causing segfaults)
+    if [ -d "vendor_dir/rules_java++toolchains+remote_java_tools_linux" ]; then
+      dynamic_linker=$(cat ${stdenv.cc}/nix-support/dynamic-linker)
+      for bin in \
+        java_tools/turbine_direct_graal \
+        java_tools/ijar/zipper \
+        java_tools/ijar/ijar \
+        java_tools/src/tools/singlejar/singlejar_local \
+        java_tools/src/tools/one_version/one_version_main
+      do
+        target="vendor_dir/rules_java++toolchains+remote_java_tools_linux/$bin"
+        if [ -f "$target" ]; then
+          mv "$target" "$target.unpatched"
+          cat > "$target" <<EOF
+#!${bash}/bin/sh
+exec $dynamic_linker --library-path ${lib.makeLibraryPath [ stdenv.cc.cc.lib zlib ]} "\$(${coreutils}/bin/readlink -f "\$0").unpatched" "\$@"
+EOF
+          chmod +x "$target"
+        fi
+      done
+    fi
 
     ## INSTALLER PATCHES
     cp ${restarter}/bin/restarter bin/linux/amd64/restarter
