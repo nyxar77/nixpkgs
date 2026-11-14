@@ -26,9 +26,16 @@ jobs:
             max-jobs = 2
             cores = 2
 
+      - name: Setup Cachix
+        uses: cachix/cachix-action@v15
+        with:
+          name: nixpkgs-contributions
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+
       - name: Build Bazel Deps
         run: |
           nix-build -A intellij-idea-oss.src.bazelDeps
+          cachix push nixpkgs-contributions ./result
 
       - name: Build IntelliJ IDEA OSS
         env:
