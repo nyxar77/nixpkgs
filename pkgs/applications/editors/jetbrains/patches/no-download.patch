@@ -10,12 +10,12 @@ diff -ruN a/build/deps/src/org/jetbrains/intellij/build/impl/BundledMavenDownloa
          groupId = split[0],
          artifactId = split[1],
          version = split[2],
-@@ -214,7 +214,7 @@
+@@ -214,6 +214,7 @@
    fun downloadMavenDistribution(communityRoot: BuildDependenciesCommunityRoot, useProjectLocalCache: Boolean, session: BuildHttpSession? = null): Path {
      val properties = BuildDependenciesDownloader.getDependencyProperties(communityRoot)
      val bundledMavenVersion = properties.property("bundledMavenVersion")
--    return distributionLock.withLock {
 +    return Path.of("MAVEN_PATH_HERE")
+     return distributionLock.withLock {
        val uri = BuildDependenciesDownloader.getUriForMavenArtifact(
          mavenRepository = BuildDependenciesConstants.MAVEN_CENTRAL_URL,
          groupId = "org.apache.maven",
