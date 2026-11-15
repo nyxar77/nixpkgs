@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Free disk space
         run: |
@@ -16,18 +16,20 @@ jobs:
           sudo rm -rf /imagegeneration || true
 
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
 
       - name: Install Nix
-        uses: cachix/install-nix-action@v27
+        uses: cachix/install-nix-action@v31
         with:
           extra_nix_config: |
             experimental-features = nix-command flakes
-            max-jobs = 2
-            cores = 2
+            max-jobs = 1
+            cores = 4
 
       - name: Setup Cachix
-        uses: cachix/cachix-action@v15
+        uses: cachix/cachix-action@v17
         with:
           name: nixpkgs-contributions
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
