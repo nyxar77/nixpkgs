@@ -125,3 +125,34 @@ diff -ruN a/platform/build-scripts/src/org/jetbrains/intellij/build/NativeBinary
      val executableFile = findFile(archiveFile, unpackedDir, binName(os, arch, "xplat-launcher"))
      val licenseFile = findFile(archiveFile, unpackedDir, "license/${LICENSE_FILE_NAME}")
      val extraFile = when (os) {
+@@ -72,8 +73,7 @@
+    * Downloads and unpacks the restart helper tarball and returns a path to an executable for the given platform.
+    */
+   fun getRestarter(context: BuildContext, os: OsFamily, arch: JvmArchitecture): Path {
+-    val (archiveFile, unpackedDir) = downloadAndUnpack(context, "restarterBuild", RESTARTER_ID)
+-    return findFile(archiveFile, unpackedDir, restarterArchivePath(os, arch))
++    return Path.of("RESTARTER_PATH_HERE")
+   }
+ 
+   /** The path of the restart helper inside its archive, `<os>-<arch>/restarter[.exe]`, at the archive root. */
+@@ -83,8 +83,8 @@
+    * Downloads and unpacks the WebP tarball and returns a path to a library for the given platform.
+    */
+   fun getLibWebp(context: BuildContext, os: OsFamily, arch: JvmArchitecture): Path {
+-    val (archiveFile, unpackedDir) = downloadAndUnpack(context, "libwebpVersion", LIBWEBP_ID)
+-    return findFile(archiveFile, unpackedDir, libName(os, arch, "webp_jni"))
++    val unpackedDir = Path.of("LIBWEBP_PATH_HERE")
++    return findFile(unpackedDir, unpackedDir, libName(os, arch, "webp_jni"))
+   }
+ 
+   /**
+diff -ruN a/platform/build-scripts/downloader/src/org/jetbrains/intellij/build/dependencies/TerminalLibGhosttyVtDownloader.kt b/platform/build-scripts/downloader/src/org/jetbrains/intellij/build/dependencies/TerminalLibGhosttyVtDownloader.kt
+--- a/platform/build-scripts/downloader/src/org/jetbrains/intellij/build/dependencies/TerminalLibGhosttyVtDownloader.kt	2026-11-11 22:30:46.244307975 +0000
++++ b/platform/build-scripts/downloader/src/org/jetbrains/intellij/build/dependencies/TerminalLibGhosttyVtDownloader.kt	2026-11-11 22:30:46.326161268 +0000
+@@ -28,5 +28,5 @@
+ 
+   /** Keep in sync with `lib_ghostty_vt_url` in `community/build/dev_launch_dependencies.bzl`. */
+   private fun downloadUrl(version: String): String =
+-    "https://$SPACE_REPO_HOST/files/p/ij/intellij-build-dependencies/$LIB_GHOSTTY_VT/$LIB_GHOSTTY_VT-$version.zip.zst"
++    "LIBGHOSTTY_VT_PATH_HERE"
+ }

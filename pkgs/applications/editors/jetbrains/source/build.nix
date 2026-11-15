@@ -136,6 +136,11 @@ let
     }
     {
       repo = "repo.maven.apache.org/maven2";
+      path = "com/fasterxml/jackson/core/jackson-core/2.16.0/jackson-core-2.16.0.jar";
+      hash = "sha256-ZuLN5Mx+Vl1fziopmLZOmRd3v5+tTSIHNcUl/Y0Bwxo=";
+    }
+    {
+      repo = "repo.maven.apache.org/maven2";
       path = "com/fasterxml/jackson/core/jackson-core/2.19.0/jackson-core-2.19.0.jar";
       hash = "sha256-2o6Fm6yUh0UoEWol8gxoVg5Ch6y/J2KHEbik+WsChDA=";
     }
@@ -161,6 +166,20 @@ let
     ];
     hash = "sha256-ttrQZUbBvvyH1BSVt1yWOoD82WwRi/hkoRfrsdCjwTA=";
     stripRoot = false;
+  };
+
+  libwebp = fetchzip {
+    urls = [
+      "https://cache-redirector.jetbrains.com/intellij-dependencies/org/jetbrains/intellij/deps/libwebp/1.6.0/libwebp-1.6.0.tar.gz"
+      "https://packages.jetbrains.team/maven/p/ij/intellij-dependencies/org/jetbrains/intellij/deps/libwebp/1.6.0/libwebp-1.6.0.tar.gz"
+    ];
+    hash = "sha256-mIWohq4Xus3iLdPx2w9BN7WvOtcftpruij7f/+eAiDY=";
+    stripRoot = false;
+  };
+
+  libghostty-vt = fetchurl {
+    url = "https://packages.jetbrains.team/files/p/ij/intellij-build-dependencies/libghostty-vt/libghostty-vt-0.1.0-tip%2B3a3047f6b.8.zip.zst";
+    hash = "sha256-a1HgeiFLEU+HJMSrDt4uMaqJ8DdyOKt2ouJQZLvh2jk=";
   };
 
   pname = "${buildType}-oss";
@@ -314,7 +333,12 @@ EOF
       --replace-fail 'BROKEN_PLUGINS_HERE' '${./brokenPlugins.json}'
     substituteInPlace \
       platform/build-scripts/src/org/jetbrains/intellij/build/NativeBinaryDownloader.kt \
-      --replace-fail 'XPLAT_LAUNCHER_PREBUILT_PATH_HERE' '${xplat-launcher}'
+      --replace-fail 'XPLAT_LAUNCHER_PREBUILT_PATH_HERE' '${xplat-launcher}' \
+      --replace-fail 'RESTARTER_PATH_HERE' '${restarter}/bin/restarter' \
+      --replace-fail 'LIBWEBP_PATH_HERE' '${libwebp}'
+    substituteInPlace \
+      platform/build-scripts/downloader/src/org/jetbrains/intellij/build/dependencies/TerminalLibGhosttyVtDownloader.kt \
+      --replace-fail 'LIBGHOSTTY_VT_PATH_HERE' '${libghostty-vt}'
 
     substituteInPlace \
       build/deps/src/org/jetbrains/intellij/build/impl/BundledMavenDownloader.kt \
