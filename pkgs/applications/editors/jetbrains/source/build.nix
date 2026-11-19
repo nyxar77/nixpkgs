@@ -351,15 +351,9 @@ EOF
   installPhase = ''
     runHook preInstall
 
-    ${bazel}/bin/bazel --batch --noexperimental_remote_repo_contents_cache run \
-      --registry=file://${registry} \
-      --repository_cache=repo_cache \
-      --repo_contents_cache= \
-      --vendor_dir=vendor_dir \
-      --lockfile_mode=update \
-      ${lib.escapeShellArgs bazelArgs} \
-      ${bazelTarget} \
-      -- \
+    BUILD_WORKSPACE_DIRECTORY="$PWD" \
+    BUILD_WORKING_DIRECTORY="$PWD" \
+    ./out/bazel-bin/${lib.replaceStrings [ "//" ":" ] [ "" "/" ] bazelTarget} \
       --jvm_flag=-Dbuild.number=${buildNumberMinor} \
       --jvm_flag=-Dintellij.build.target.os=current \
       --jvm_flag=-Dintellij.build.target.arch=current
